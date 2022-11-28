@@ -66,7 +66,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.bottom >= height:
             self.rect.bottom = height
-            if tlc or trc:
+            if tlc:
                 bg.move.down(self)
 
         if pd!=1:
@@ -193,7 +193,6 @@ def DEAD():
 
 class health():
     health=1
-
     def check_health():
         if health.health <= 0:
             return DEAD()
