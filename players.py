@@ -45,6 +45,8 @@ class Player(pygame.sprite.Sprite):
         
         pd.update()
 
+player=Player()
+
 class Player_direction():
     """
     dir 1: up
@@ -65,7 +67,29 @@ class Player_direction():
         else:
             self.up=False;self.down=False;self.right=False;self.left=False
     
-    def update():
-        pass
+    def update(self):
+        p=player
+        if   self.up:
+            p.sprite_img   = pygame.image.load("imgs/tile015.png").convert_alpha()
+            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
 
-player=Player()
+        
+        elif self.down:
+            p.sprite_img   = pygame.image.load("imgs/tile000.png").convert_alpha()
+            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+
+        
+        elif self.right:
+            p.sprite_img   = pygame.image.load("imgs/tile010.png").convert_alpha()
+            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+
+        
+        elif self.left:
+            p.sprite_img   = pygame.image.load("imgs/tile005.png").convert_alpha()
+            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+
+        
+        else:
+            p.sprite_img   = pygame.image.load("imgs/tile000.png").convert_alpha()
+            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+
