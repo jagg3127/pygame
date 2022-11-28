@@ -1,13 +1,14 @@
 import pygame
 from   pygame.locals  import *
 from   initial_screen import deminsions
+#from   background     import bg 
 width = deminsions[0]
 height = deminsions[1]
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        self.sprite_img   = pygame.image.load("imgs/tile000.png").convert_alpha()
+        self.sprite_img   = pygame.image.load("imgs/up1.png").convert_alpha()
         self.sprite       = pygame.transform.scale(self.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
         self.rect         = self.sprite.get_rect()
         self.rect.centerx = (width//2)
@@ -30,6 +31,8 @@ class Player(pygame.sprite.Sprite):
         elif keyinput[K_DOWN]:
             self.rect.centery += 2
             pd=Player_direction(2)
+        elif keyinput[K_SPACE]:
+            pd=1
         else:
             pd=Player_direction(0)
 
@@ -43,10 +46,15 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= height:
             self.rect.bottom = height
         
-        pd.update()
+        if pd!=1:
+            pd.update()
+        else:
+            self.fire() 
+    
+    def fire(self):
+        pass
 
 player=Player()
-
 class Player_direction():
     """
     dir 1: up
@@ -58,38 +66,97 @@ class Player_direction():
         super(Player_direction, self).__init__()
         if dir==1:
             self.up=True;self.down=False;self.right=False;self.left=False
+
         elif dir==2:
             self.up=False;self.down=True;self.right=False;self.left=False
+
         elif dir==3:
             self.up=False;self.down=False;self.right=True;self.left=False
+
         elif dir==4:
             self.up=False;self.down=False;self.right=False;self.left=True
+
         else:
             self.up=False;self.down=False;self.right=False;self.left=False
-    
+
     def update(self):
         p=player
-        if   self.up:
-            p.sprite_img   = pygame.image.load("imgs/tile015.png").convert_alpha()
+        if _STORE.up2==False and self.up:
+            _STORE.x=0
+            p.sprite_img   = pygame.image.load("imgs/up1.png").convert_alpha()
             p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            _STORE.up2=True; _STORE.down2=False; _STORE.right2=False; _STORE.left2=False
 
-        
-        elif self.down:
-            p.sprite_img   = pygame.image.load("imgs/tile000.png").convert_alpha()
+        elif _STORE.up2 and self.up:
+            _STORE.x=_STORE.x+1
+            if _STORE.x>10 and _STORE.x <20:
+                p.sprite_img   = pygame.image.load("imgs/up1.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x<=5:
+                p.sprite_img   = pygame.image.load("imgs/up2.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x > 25:
+                _STORE.up2=False; _STORE.down2=False; _STORE.right2=False; _STORE.left2=False
+
+
+        elif _STORE.down2==False and self.down:
+            _STORE.x=0
+            p.sprite_img   = pygame.image.load("imgs/down1.png").convert_alpha()
             p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            _STORE.up2=False; _STORE.down2=True; _STORE.right2=False; _STORE.left2=False
 
-        
-        elif self.right:
-            p.sprite_img   = pygame.image.load("imgs/tile010.png").convert_alpha()
+        elif _STORE.down2 and self.down:
+            _STORE.x=_STORE.x+1
+            if _STORE.x>10 and _STORE.x <20:
+                p.sprite_img   = pygame.image.load("imgs/down1.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x<=5:
+                p.sprite_img   = pygame.image.load("imgs/down2.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x > 25:
+                _STORE.up2=False; _STORE.down2=False; _STORE.right2=False; _STORE.left2=False
+
+        elif _STORE.right2==False and self.right:
+            _STORE.x=0
+            p.sprite_img   = pygame.image.load("imgs/right1.png").convert_alpha()
             p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            _STORE.up2=False; _STORE.down2=False; _STORE.right2=True; _STORE.left2=False
 
-        
-        elif self.left:
-            p.sprite_img   = pygame.image.load("imgs/tile005.png").convert_alpha()
+
+        elif _STORE.right2 and self.right:
+            _STORE.x=_STORE.x+1
+            if _STORE.x>10 and _STORE.x <20:
+                p.sprite_img   = pygame.image.load("imgs/right1.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x<=5:
+                p.sprite_img   = pygame.image.load("imgs/right2.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x > 25:
+                _STORE.up2=False; _STORE.down2=False; _STORE.right2=False; _STORE.left2=False
+
+        elif _STORE.left2==False and self.left:
+            _STORE.x=0
+            p.sprite_img   = pygame.image.load("imgs/left1.png").convert_alpha()
             p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            _STORE.up2=False; _STORE.down2=False; _STORE.right2=False; _STORE.left2=True
 
-        
-        else:
-            p.sprite_img   = pygame.image.load("imgs/tile000.png").convert_alpha()
-            p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
 
+        elif _STORE.left2 and self.left:
+            _STORE.x=_STORE.x+1
+            if _STORE.x>10 and _STORE.x <20:
+                p.sprite_img   = pygame.image.load("imgs/left1.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x<=5:
+                p.sprite_img   = pygame.image.load("imgs/left2.png").convert_alpha()
+                p.sprite       = pygame.transform.scale(p.sprite_img, (width/3/1.5/1.5, height/1.5/1.5/1.5))
+            elif _STORE.x > 25:
+                _STORE.up2=False; _STORE.down2=False; _STORE.right2=False; _STORE.left2=False
+
+
+
+class _STORE:
+    x=0
+    up2=False
+    down2=False
+    right2=False
+    left2=False
