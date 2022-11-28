@@ -1,39 +1,32 @@
 import pygame 
 from   pygame.locals  import *
-from   players        import player
 from   initial_screen import x, screen, deminsions
-from   imports.ss     import spritesheet
+from   players        import player
 
-import sys
-import pygame
-from pygame.locals import Color, KEYUP, K_ESCAPE, K_RETURN
-from imports.mainanim import SpriteStripAnim
+width = deminsions[0]
+height = deminsions[1]
 
-surface = pygame.display.set_mode((100,100))
-FPS = 120
-frames = FPS / 12
-strips = []
-for x in range(0, 18):
-    print(x)
-"""
-black = Color('black')
-clock = pygame.time.Clock()
-n = 0
-strips[n].iter()
-image = strips[n].next()
+white = (255, 255, 255)
+background = pygame.Surface(screen.get_size())
+background.fill(white)
+
+screen.blit(background, (0, 0))
+screen.blit(player.sprite, player.rect)
+
+pygame.display.flip()
+
 while True:
-    for e in pygame.event.get():
-        if e.type == KEYUP:
-            if e.key == K_ESCAPE:
-                sys.exit()
-            elif e.key == K_RETURN:
-                n += 1
-                if n >= len(strips):
-                    n = 0
-                strips[n].iter()
-    surface.fill(black)
-    surface.blit(image, (0,0))
+    events = pygame.event.get()
+    for event in events:
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_ESCAPE:
+                pygame.quit();break
+
+    keyinput = pygame.key.get_pressed()
+    
+    player.update(keyinput)
+
+    screen.blit(background, (0,0))
+    screen.blit(player.sprite, player.rect)
+    # update display
     pygame.display.flip()
-    image = strips[n].next()
-    clock.tick(FPS)
-"""
