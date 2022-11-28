@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= height:
             self.rect.bottom = height
         
-        Player_direction.update()
+        pd.update()
 
 class Player_direction():
     """
