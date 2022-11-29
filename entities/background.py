@@ -24,6 +24,10 @@ class Background(pygame.sprite.Sprite):
         tlc=False
         brc=False
         blc=False
+        main=0
+        num1=426
+        map1=False
+        map2=False
 
     class move:
         def left(player):
@@ -32,7 +36,11 @@ class Background(pygame.sprite.Sprite):
             if trc:
                 store.tlc=True
                 store.trc=False
-                bg.sprite.fill(TLC)
+                if store.map1==False:
+                    bg.sprite.fill(TLC)
+                else:
+                    bg.sprite.fill(TRC)
+
 
             elif brc:
                 store.blc=True

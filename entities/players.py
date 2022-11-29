@@ -2,8 +2,10 @@ import pygame
 from   pygame.locals  import *
 from   initial_screen import screen, deminsions
 from   entities.background     import bg 
+from   entities.enemy          import generate_enemies, Lazer
 width = deminsions[0]
 height = deminsions[1]
+lazer=Lazer()
 
 def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
     pygame.draw.rect(surf, backC, (*pos, *size))
@@ -27,24 +29,40 @@ class Player(pygame.sprite.Sprite):
     # Move the sprite based on user keypresses
     def update(self, keyinput):
         store= bg._STORE; trc=store.trc;tlc=store.tlc;brc=store.brc;blc=store.blc
+
+
         if keyinput[K_LEFT]:
-            self.rect.centerx -= 4
+            self.rect.centerx -= 8
             pd=Player_direction(4)
+            direct.up=False
+            direct.down=False
+            direct.right=False
+            direct.left=True
 
         elif keyinput[K_RIGHT]:
             self.rect.centerx += 4
             pd=Player_direction(3)
+            direct.up=False
+            direct.down=False
+            direct.right=True
+            direct.left=False
 
         elif keyinput[K_UP]:
             self.rect.centery -= 4
             pd=Player_direction(1)
+            direct.up=True
+            direct.down=False
+            direct.right=False
+            direct.left=False
 
         elif keyinput[K_DOWN]:
             self.rect.centery += 4
             pd=Player_direction(2)
+            direct.up=False
+            direct.down=False
+            direct.right=False
+            direct.left=False
 
-        elif keyinput[K_SPACE]:
-            pd=1
         else:
             pd=Player_direction(0)
 
@@ -56,24 +74,21 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.right > width:
             self.rect.right = width
-            if tlc or blc:
-                bg.move.right(self)
+            
+            if tlc or blc:bg.move.right(self)
 
         if self.rect.top <= 0:
             self.rect.top = 0
-            if blc or brc:
-                bg.move.up(self)
+            
+            if blc or brc:bg.move.up(self)
 
         if self.rect.bottom >= height:
             self.rect.bottom = height
-            if tlc:
-                bg.move.down(self)
+            
+            if tlc and store.map1:bg.move.down(self)
 
-        if pd!=1:
-            pd.update()
-
-        else:
-            self.fire() 
+        pd.update()
+        generate_enemies(health, self)
     
     def draw_health(self, surf):
         health_rect = pygame.Rect(0, 0, self.sprite_img.get_width(), 7)
@@ -82,9 +97,6 @@ class Player(pygame.sprite.Sprite):
         draw_health_bar(surf, health_rect.topleft, health_rect.size, 
                 (0, 0, 0), (255, 0, 0), (0, 255, 0), health.health/max_health) 
 
-    def fire(self):
-        health.health-=1
-        pass
 
 player=Player()
 class Player_direction():
@@ -107,6 +119,12 @@ class Player_direction():
 
         elif dir==4:
             self.up=False;self.down=False;self.right=False;self.left=True
+
+        elif dir==5:
+            self.up   =direct.up
+            self.down =direct.down
+            self.right=direct.right
+            self.left =direct.left
 
         else:
             self.up=False;self.down=False;self.right=False;self.left=False
@@ -210,6 +228,12 @@ class _STORE:
     right2=False
     left2=False
     run=True
+
+class direct:
+    up=False
+    down=True
+    right=False
+    left=False
 
 def end_game():
     pass
