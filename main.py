@@ -3,9 +3,8 @@ from   pygame.locals  import *
 from   initial_screen import x, screen, deminsions
 from   entities.players        import player, health, _STORE, direct
 from   entities.background     import bg
-from   entities.enemy          import generate_enemies, Lazer
+from   entities.enemy          import generate_enemies
 ALL=[player]
-lazer  = Lazer()
 width  = deminsions[0]
 height = deminsions[1]
 white  = (255, 255, 255)

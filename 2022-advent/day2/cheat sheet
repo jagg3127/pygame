@@ -1,0 +1,12 @@
+a=  Rock
+b=  Paper
+c=  Scissors
+
+x=  Lose
+y=  Draw
+z=  Win
+
+
+Rock    = 1
+Paper   = 2
+Scissors= 3

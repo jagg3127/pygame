@@ -2,10 +2,9 @@ import pygame
 from   pygame.locals  import *
 from   initial_screen import screen, deminsions
 from   entities.background     import bg 
-from   entities.enemy          import generate_enemies, Lazer
+from   entities.enemy          import generate_enemies
 width = deminsions[0]
 height = deminsions[1]
-lazer=Lazer()
 
 def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
     pygame.draw.rect(surf, backC, (*pos, *size))
@@ -210,7 +209,7 @@ def DEAD():
 
 
 class health():
-    health=1
+    health=5
     def check_health():
         if health.health <= 0:
             return DEAD()
