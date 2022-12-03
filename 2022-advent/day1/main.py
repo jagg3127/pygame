@@ -6,7 +6,8 @@ class print():
             self.order()
 
     def _write(self, data):
-        with open("logs_day1", "w") as f:
+        file="logs_part2" if self.two else "logs_part1" 
+        with open(file, "w") as f:
             f.write(data)
 
     def elf(self):
@@ -51,7 +52,12 @@ class print():
             x.reverse()
 
             if self.two:
-                p(x[0]+x[1]+x[2])
+                p(x[0]+x[1]+x[2], "\n\n", x)
+                x2=x[0]+x[1]+x[2]
+                ip=input("would you like to save data? (y/N) ")
+                ip=True if ip.lower()=="y" else False
+                if ip:
+                    self._write(f"{x2} \n\n {x}")
                 return
             x="".join(x).strip()
             x=f"FROM HIGHEST TOTAL CALORIES TO LOWEST\n\n{x}"
@@ -61,7 +67,7 @@ class print():
             if ip:
                 self._write(x)
 try:
-    DAY=int(input("day\n"))
-    print(DAY)
+    PART=int(input("PART\n"))
+    print(PART)
 except Exception as e:
-    p(f"NUMBERS ONLY \n\n {e}")
+    p(f"1 or 2 ONLY \n\n {e}")
